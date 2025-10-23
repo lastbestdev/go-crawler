@@ -11,6 +11,7 @@ type Input struct {
 	SearchDepth int
 }
 
+// ReadInput reads and validates command line input for URL and search depth
 func ReadInput() (*Input, error) {
 	// set depth flag
 	depth := flag.Int("n", 3, "Specifies the depth links will be crawled from the input URL.")

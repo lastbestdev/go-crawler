@@ -23,5 +23,5 @@ func main() {
 		return
 	}
 
-	root.PrintTree(1)
+	RenderTemplate(root, "templates/output.html")
 }

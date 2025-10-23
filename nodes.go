@@ -12,6 +12,7 @@ type Node struct {
 	Children []*Node
 }
 
+// create Nodes with page title and URL
 func MakeNode(title string, urlStr string) (*Node, error) {
 	parsedURL, err := url.Parse(urlStr)
 	if err != nil {
@@ -25,6 +26,7 @@ func MakeNode(title string, urlStr string) (*Node, error) {
 	}, nil
 }
 
+// add child Nodes to parent Node
 func (n *Node) AddChild(child *Node) {
 	if child == nil {
 		return
@@ -33,6 +35,7 @@ func (n *Node) AddChild(child *Node) {
 	n.Children = append(n.Children, child)
 }
 
+// print tree to console for debugging
 func (n *Node) PrintTree(level int) {
 	fmt.Printf("node (title: %s, url: %s) at level %d\n", n.Title, n.URL.String(), level)
 
