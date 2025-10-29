@@ -10,9 +10,9 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Printf("Received input URL: %s, search depth: %d\n", input.URL.String(), input.SearchDepth)
+	fmt.Printf("seed URL: %s, search depth: %d\n", input.URL.String(), input.SearchDepth)
 
-	root, err := ProcessURL(input.URL.String(), input.SearchDepth)
+	root, err := ProcessURL(*input)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -23,5 +23,8 @@ func main() {
 		return
 	}
 
-	RenderTemplate(root, "templates/output.html")
+	err = RenderTemplate(root, "templates/output.html")
+	if err == nil {
+		fmt.Printf("output written to /templates/output.html. run `open ./templates/output.html` to view in browser.")
+	}
 }

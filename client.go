@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// fetches the content of a URL, reads it into a string and returns it
 func FetchURLContent(url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {

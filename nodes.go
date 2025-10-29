@@ -1,27 +1,21 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"net/url"
 )
 
 type Node struct {
 	Title    string
-	URL      *url.URL
+	URL      url.URL
 	Children []*Node
 }
 
 // create Nodes with page title and URL
-func MakeNode(title string, urlStr string) (*Node, error) {
-	parsedURL, err := url.Parse(urlStr)
-	if err != nil {
-		return nil, errors.New("unable to create node, invalid URL")
-	}
-
+func MakeNode(title string, url url.URL) (*Node, error) {
 	return &Node{
 		Title:    title,
-		URL:      parsedURL,
+		URL:      url,
 		Children: []*Node{},
 	}, nil
 }
