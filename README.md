@@ -1,8 +1,6 @@
 # go-crawler
 a basic web crawler written in go. works on the command line.
 
-**NOTE: please use caution when running this crawler, as it does not currently comply with `robots.txt` files.** (info about `robots.txt` files [here](https://en.wikipedia.org/wiki/Robots.txt))
-
 ## how to use
 ### running the crawler
 a `seed URL` is required for the crawler to begin a search from. this URL is provided by the user as a command line argument. 
