@@ -1,6 +1,15 @@
 # go-crawler
 a basic web crawler written in go. works on the command line.
 
+### features 
+- recursively crawls webpages by following anchor tags (links) found in the HTML source, until specified `searchDepth` is reached (i.e. # of links followed away from the seed URL)
+- fetch and parse `robots.txt` files to comply with crawler rules (follow User-agent: * guidelines)
+- builds a search tree of visted pages while crawling, and outputs to viewable `output.html`
+
+### limitations 
+- no persistence (database). every run is completed in memory, from scratch. 
+- does not execute javascript. the crawler fetches/reads static content served on initial page load (unable to read dynamically populated page content. ex. SPA applications without SSR)
+
 ## how to use
 ### running the crawler
 a `seed URL` is required for the crawler to begin a search from. this URL is provided by the user as a command line argument. 
