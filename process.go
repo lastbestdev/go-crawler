@@ -17,10 +17,16 @@ func ProcessURL(input Input) (*Node, error) {
 	return root, nil
 }
 
+var visitedUrls = make(map[string]bool)
+
 func process(url url.URL, depth, maxDepth int) (*Node, error) {
 	if depth > maxDepth {
 		error := fmt.Errorf("max depth reached at URL: %s. breaking search", url.String())
 		return nil, error
+	}
+	// skip already visited URLs
+	if visitedUrls[url.String()] {
+		return nil, nil
 	}
 
 	// first check robots.txt cache
@@ -88,8 +94,20 @@ func process(url url.URL, depth, maxDepth int) (*Node, error) {
 	// iterate child links and recursively process
 	parentUrl := url.String()
 	for _, link := range links {
+		// skip non http schemes
+		if strings.HasPrefix(link, "mailto:") || strings.HasPrefix(link, "tel:") || strings.HasPrefix(link, "javascript:") || strings.HasPrefix(link, "sms:") {
+			continue
+		}
+
+		// skip links within page
+		if strings.HasPrefix(link, "#") {
+			continue
+		}
+
 		// handle relative links
 		if strings.HasPrefix(link, "/") {
+			link = rootUrl + link
+		} else if strings.HasPrefix(link, "./") || strings.HasPrefix(link, "../") {
 			link = parentUrl + link
 		}
 
@@ -112,6 +130,9 @@ func process(url url.URL, depth, maxDepth int) (*Node, error) {
 
 		node.AddChild(child)
 	}
+
+	// mark URL as visited
+	visitedUrls[url.String()] = true
 
 	return node, nil
 }
